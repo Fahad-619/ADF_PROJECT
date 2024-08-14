@@ -1,0 +1,9 @@
+{
+	"name": "Projectolp",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "60de1433-93e4-4963-bb33-63f10a8bddb1",
+		"tenantId": "372cf030-938d-4d5a-a4eb-2a362364ff60"
+	}
+}
