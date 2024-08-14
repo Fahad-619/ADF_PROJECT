@@ -1,23 +1,23 @@
 {
-	"name": "src_files",
+	"name": "src_target",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "storageaccount",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"srccontainer": {
+			"des_container": {
 				"type": "string"
 			},
-			"srcfolder": {
+			"des_folder": {
 				"type": "string"
 			},
-			"srcfilename": {
+			"des_filename": {
 				"type": "string"
 			}
 		},
 		"folder": {
-			"name": "src_dataset"
+			"name": "Target_ds"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
@@ -25,15 +25,15 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().srcfilename",
+					"value": "@dataset().des_filename",
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().srcfolder",
+					"value": "@dataset().des_folder",
 					"type": "Expression"
 				},
 				"fileSystem": {
-					"value": "@dataset().srccontainer",
+					"value": "@dataset().des_container",
 					"type": "Expression"
 				}
 			},
