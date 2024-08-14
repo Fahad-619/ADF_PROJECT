@@ -48,13 +48,91 @@
 					"isSequential": false,
 					"activities": [
 						{
-							"name": "Wait1",
-							"type": "Wait",
+							"name": "Copy data1",
+							"type": "Copy",
 							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 1
-							}
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"dataIntegrationUnits": 8,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "src_files",
+									"type": "DatasetReference",
+									"parameters": {
+										"srccontainer": {
+											"value": "@item().src_container\r\n",
+											"type": "Expression"
+										},
+										"srcfolder": {
+											"value": "@item().src_folder \r\n",
+											"type": "Expression"
+										},
+										"srcfilename": {
+											"value": "@item().src_filename \r\n",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "src_target",
+									"type": "DatasetReference",
+									"parameters": {
+										"des_container": {
+											"value": "@item().destination_container \r\n",
+											"type": "Expression"
+										},
+										"des_folder": {
+											"value": "@concat(item().destination_folder,'/', utcNow('yyyy-MM-dd'))",
+											"type": "Expression"
+										},
+										"des_filename": {
+											"value": "@item().destination_filename",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
 					]
 				}
